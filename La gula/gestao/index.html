@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — La Gula Cardápio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/gestao/admin.css"/>
+</head>
+<body>
+
+<!-- ── TELA DE LOGIN ── -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-brand"><em>La</em> Gula</div>
+    <div class="login-sub">Painel administrativo</div>
+    <div class="field">
+      <label>E-mail</label>
+      <input type="email" id="email-input" placeholder="admin@lagula.com.br" autocomplete="email"/>
+    </div>
+    <div class="field">
+      <label>Senha</label>
+      <input type="password" id="senha-input" placeholder="••••••••" autocomplete="current-password"/>
+    </div>
+    <button class="btn-login" id="btn-login">Entrar</button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
+
+<!-- ── TELA ADMIN ── -->
+<div id="admin-screen">
+  <nav class="admin-nav">
+    <div class="admin-brand">
+      <em>La</em> Gula <span>Cardápio</span>
+    </div>
+    <button class="btn-logout" onclick="window.fazerLogout()">Sair</button>
+  </nav>
+
+  <div class="admin-body">
+
+    <!-- Navegação por abas -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="cardapio">
+        <svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="15" height="15"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Cardápio
+      </button>
+      <button class="admin-tab" data-tab="galeria">
+        <svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="15" height="15"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Galeria
+      </button>
+      <button class="admin-tab" data-tab="horarios">
+        <svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="15" height="15"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Horários
+      </button>
+      <button class="admin-tab" data-tab="qrcode">
+        <svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="15" height="15"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><line x1="20" y1="14" x2="20" y2="14"/><line x1="20" y1="20" x2="20" y2="20"/><line x1="14" y1="20" x2="14" y2="20"/></svg>
+        QR Code
+      </button>
+    </div>
+
+    <!-- ABA: Cardápio -->
+    <div class="tab-panel active" id="tab-cardapio">
+      <div class="stats-row" id="stats-row">
+        <div class="stat-card"><div class="stat-card-num" id="stat-total">—</div><div class="stat-card-lbl">Total de itens</div></div>
+        <div class="stat-card"><div class="stat-card-num" id="stat-ativos">—</div><div class="stat-card-lbl">Ativos no site</div></div>
+        <div class="stat-card"><div class="stat-card-num" id="stat-cats">—</div><div class="stat-card-lbl">Categorias</div></div>
+        <div class="stat-card"><div class="stat-card-num" id="stat-ocultos">—</div><div class="stat-card-lbl">Ocultos</div></div>
+      </div>
+      <div class="toolbar">
+        <input class="toolbar-search" id="busca" type="text" placeholder="Buscar por nome ou categoria…" oninput="renderTabela()"/>
+        <select class="toolbar-filter" id="filtro-cat" onchange="renderTabela()"><option value="">Todas as categorias</option></select>
+        <select class="toolbar-filter" id="filtro-status" onchange="renderTabela()">
+          <option value="">Todos</option>
+          <option value="ativo">Ativos</option>
+          <option value="oculto">Ocultos</option>
+        </select>
+        <button class="btn-new" onclick="window._abrirModal()">+ Novo item</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nome</th><th>Categoria</th><th>Descrição</th><th>Preço</th><th>Visível</th><th>Ações</th></tr></thead>
+          <tbody id="tabela-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ABA: Galeria -->
+    <div class="tab-panel" id="tab-galeria">
+      <div class="horario-card">
+        <div class="horario-header">
+          <div>
+            <div class="horario-title">Galeria de Fotos</div>
+            <div class="horario-sub">Fotos exibidas na página inicial do site</div>
+          </div>
+          <label class="btn-new" style="cursor:pointer">
+            + Adicionar foto
+            <input type="file" accept="image/*" multiple style="display:none" onchange="window._uploadGaleria(this)"/>
+          </label>
+        </div>
+        <div class="galeria-admin-grid" id="galeria-admin-grid">
+          <div class="galeria-admin-empty">Nenhuma foto ainda.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA: Horários -->
+    <div class="tab-panel" id="tab-horarios">
+      <div class="horario-card">
+        <div class="horario-header">
+          <div>
+            <div class="horario-title">Horário de Funcionamento</div>
+            <div class="horario-sub">Defina os dias e horários exibidos no site</div>
+          </div>
+          <button class="btn-new" id="btn-save-horario" onclick="window.salvarHorarios()">Salvar horários</button>
+        </div>
+        <div class="horario-list" id="horario-list"></div>
+      </div>
+    </div>
+
+    <!-- ABA: QR Code -->
+    <div class="tab-panel" id="tab-qrcode">
+      <div class="horario-card">
+        <div class="horario-header">
+          <div>
+            <div class="horario-title">QR Code — Cardápio Digital</div>
+            <div class="horario-sub">Imprima e coloque nas mesas</div>
+          </div>
+          <button class="btn-new" onclick="window._baixarQR()">Baixar PNG</button>
+        </div>
+        <div class="qr-section">
+          <img id="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=https%3A%2F%2Fla-gula.vercel.app%2Fmesa.html&bgcolor=f7f2ea&color=1c1410&margin=24&format=png" alt="QR Code cardápio"/>
+          <div class="qr-info">
+            <div class="qr-url">la-gula.vercel.app/mesa.html</div>
+            <p>Aponte a câmera do celular para acessar o cardápio completo com botões de pedido.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── MODAL EDIÇÃO / NOVO ── -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-titulo">Novo item</div>
+      <button class="btn-close" onclick="window.fecharModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-id"/>
+
+      <div class="modal-row">
+        <div class="modal-field">
+          <label>Nome *</label>
+          <input type="text" id="edit-nome" placeholder="Ex: Carne e queijo"/>
+        </div>
+        <div class="modal-field">
+          <label>Preço (R$)</label>
+          <input type="text" id="edit-preco" placeholder="Ex: 12,90"/>
+        </div>
+      </div>
+
+      <div class="modal-row">
+        <div class="modal-field">
+          <label>Categoria *</label>
+          <input type="text" id="edit-categoria" placeholder="Ex: Empanadas"/>
+        </div>
+        <div class="modal-field">
+          <label>Subcategoria</label>
+          <input type="text" id="edit-subcategoria" placeholder="Ex: Carne"/>
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label>Descrição</label>
+        <textarea id="edit-descricao" placeholder="Ingredientes e detalhes do item…"></textarea>
+      </div>
+
+      <div class="modal-field">
+        <label>Foto do produto</label>
+        <div class="upload-area" id="upload-area" onclick="document.getElementById('upload-input').click()">
+          <div class="upload-placeholder" id="upload-placeholder">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span>Clique para enviar uma foto</span>
+            <small>JPG, PNG ou WebP · máx. 5 MB</small>
+          </div>
+          <div class="upload-preview" id="upload-preview" style="display:none">
+            <img id="upload-preview-img" src="" alt="preview"/>
+            <button class="upload-remove" type="button" onclick="event.stopPropagation(); window.removerFoto()">✕</button>
+          </div>
+          <div class="upload-progress" id="upload-progress" style="display:none">
+            <span id="upload-progress-txt">Enviando…</span>
+            <div class="upload-progress-bar"><div class="upload-progress-fill" id="upload-progress-fill" style="width:0%"></div></div>
+          </div>
+        </div>
+        <input type="file" id="upload-input" accept="image/*" style="display:none" onchange="window._uploadFoto(this)"/>
+        <input type="hidden" id="edit-foto"/>
+      </div>
+
+      <div class="modal-field">
+        <label>Nota (ex: aprox. 160g por unidade)</label>
+        <input type="text" id="edit-nota" placeholder="Informação extra opcional"/>
+      </div>
+
+      <div class="modal-ativo">
+        <label class="toggle" title="Visível no site">
+          <input type="checkbox" id="edit-ativo" checked/>
+          <span class="slider"></span>
+        </label>
+        <label for="edit-ativo">Visível no site</label>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="window.fecharModal()">Cancelar</button>
+        <button class="btn-save" id="btn-save" onclick="window.salvarItem()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONFIRM OCULTAR ── -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-box">
+    <div class="confirm-title">Ocultar item?</div>
+    <div class="confirm-msg" id="confirm-msg">
+      O item será marcado como oculto e não aparecerá no site.<br>
+      Nenhum dado é apagado — você pode reativar quando quiser.
+    </div>
+    <div class="confirm-btns">
+      <button class="btn-confirm-cancel" onclick="window.fecharConfirm()">Cancelar</button>
+      <button class="btn-confirm-ok" id="btn-confirm-ok">Ocultar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONFIRM EXCLUIR ── -->
+<div class="confirm-overlay" id="excluir-overlay">
+  <div class="confirm-box">
+    <div class="confirm-title" style="color:var(--red)">Excluir item?</div>
+    <div class="confirm-msg" id="excluir-msg">
+      O item será removido permanentemente.<br>
+      Esta ação não pode ser desfeita.
+    </div>
+    <div class="confirm-btns">
+      <button class="btn-confirm-cancel" onclick="window.fecharConfirmExcluir()">Cancelar</button>
+      <button class="btn-confirm-ok" id="btn-excluir-ok">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script type="module" src="/gestao/admin.js"></script>
+</body>
+</html>

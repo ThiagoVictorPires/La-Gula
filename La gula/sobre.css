@@ -1,0 +1,184 @@
+/* ── SOBRE PAGE ── */
+
+.sobre-hero {
+  position: relative; height: 56vw; max-height: 480px;
+  min-height: 280px; margin-top: var(--nav-h); overflow: hidden;
+}
+.sobre-hero-img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.55) saturate(.8);
+}
+.sobre-hero-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: flex-end;
+  background: linear-gradient(to top, rgba(28,20,16,.7) 0%, transparent 60%);
+  padding: 40px 24px;
+}
+.sobre-hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; }
+.sobre-hero-inner .ew { color: var(--gold) !important; }
+.sobre-hero-inner .ew::before { background: var(--gold); }
+.sobre-hero-inner h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 700;
+  color: var(--cream); line-height: 1.08; margin-top: 10px;
+}
+.sobre-hero-inner h1 em { font-style: italic; color: var(--gold); }
+
+/* História */
+.sobre-historia { padding: 72px 24px; background: var(--cream); }
+.sobre-historia-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+}
+.sobre-historia-text .ew { color: var(--terra); }
+.sobre-historia-text h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700;
+  color: var(--ink); line-height: 1.15; margin-top: 8px; margin-bottom: 20px;
+}
+.sobre-historia-text h2 em { font-style: italic; color: var(--terra); }
+.sobre-historia-text p {
+  font-size: .88rem; color: var(--muted); line-height: 1.9;
+  font-weight: 300; margin-bottom: 16px;
+}
+.sobre-historia-text p:last-of-type { margin-bottom: 0; }
+
+.sobre-stats {
+  display: flex; gap: 32px; margin-top: 36px;
+  padding-top: 28px; border-top: 1px solid var(--border);
+}
+.sobre-stat-num {
+  font-family: 'Cormorant Garamond', serif; font-size: 2rem;
+  font-weight: 700; color: var(--terra); line-height: 1;
+}
+.sobre-stat-lbl {
+  font-size: .6rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-top: 4px; font-weight: 600;
+}
+
+.sobre-historia-img {
+  position: relative; border-radius: 12px; overflow: hidden;
+}
+.sobre-historia-img img {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover;
+  filter: saturate(.9); display: block;
+}
+.sobre-badge {
+  position: absolute; bottom: 20px; right: 20px;
+  background: var(--ink); border-radius: 8px; padding: 12px 16px;
+  text-align: center;
+}
+.sobre-badge span {
+  display: block; font-size: .6rem; letter-spacing: 2px;
+  text-transform: uppercase; color: rgba(247,242,234,.4); font-weight: 600;
+}
+.sobre-badge-dest {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 1.2rem !important; font-weight: 700 !important;
+  color: var(--gold) !important; letter-spacing: 0 !important;
+  text-transform: none !important; margin-top: 2px;
+}
+
+/* Diferenciais */
+.sobre-diferenciais { padding: 72px 24px; background: var(--warm); }
+.sobre-diferenciais-inner { max-width: 1100px; margin: 0 auto; }
+.sobre-diferenciais-inner .ew { justify-content: center; }
+.sobre-diferenciais-inner .ew::before { display: none; }
+.sobre-diferenciais-inner h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700;
+  color: var(--ink); line-height: 1.15; margin-top: 8px; margin-bottom: 48px;
+}
+.sobre-diferenciais-inner h2 em { font-style: italic; color: var(--terra); }
+
+.diferenciais-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.diferencial-card {
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: 10px; padding: 28px 24px;
+  transition: box-shadow .2s, transform .2s;
+}
+.diferencial-card:hover {
+  box-shadow: 0 8px 28px rgba(28,20,16,.08); transform: translateY(-3px);
+}
+.diferencial-icon { margin-bottom: 16px; display: flex; align-items: center; }
+.diferencial-card h3 {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+  font-weight: 700; color: var(--ink); margin-bottom: 8px;
+}
+.diferencial-card p {
+  font-size: .8rem; color: var(--muted); line-height: 1.7; font-weight: 300;
+}
+
+/* Local — horários + contato */
+.sobre-local { padding: 72px 24px; background: var(--cream); }
+.sobre-local-inner {
+  max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+}
+
+.local-card {
+  background: var(--warm); border: 1px solid var(--border);
+  border-radius: 12px; padding: 32px 28px;
+}
+.local-card-icon { margin-bottom: 16px; }
+.local-card h3 {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+  font-weight: 700; color: var(--ink); margin-bottom: 20px;
+}
+
+/* Horários */
+.horarios-list { display: flex; flex-direction: column; gap: 12px; }
+.horario-row {
+  display: flex; align-items: baseline;
+  justify-content: space-between; gap: 8px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--border);
+}
+.horario-row:last-child { border-bottom: none; padding-bottom: 0; }
+.horario-dia { font-size: .78rem; font-weight: 600; color: var(--ink); }
+.horario-hora { font-size: .76rem; color: var(--muted); font-weight: 300; text-align: right; }
+.horario-fechado { font-size: .76rem; color: var(--terra); font-weight: 500; }
+.horario-obs {
+  font-size: .66rem; color: var(--muted); margin-top: 14px;
+  font-style: italic; font-weight: 300;
+}
+
+/* Contato */
+.contato-list { display: flex; flex-direction: column; gap: 14px; }
+.contato-item {
+  display: flex; align-items: center; gap: 12px;
+  font-size: .84rem; color: var(--ink); text-decoration: none;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  transition: color .2s;
+}
+.contato-item:last-child { border-bottom: none; }
+.contato-item:hover { color: var(--terra); }
+.contato-wa { color: #1a7a3c; font-weight: 500; }
+.contato-wa:hover { color: #1da851; }
+
+/* Mapa */
+.sobre-mapa {
+  position: relative; height: 420px; overflow: hidden;
+}
+.sobre-mapa iframe {
+  width: 100%; height: 100%; border: none;
+  filter: grayscale(20%) contrast(1.04);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sobre-historia-inner { grid-template-columns: 1fr; gap: 40px; }
+  .sobre-historia-img { max-height: 300px; }
+  .sobre-historia-img img { aspect-ratio: 16/9; }
+  .sobre-local-inner { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .sobre-historia,
+  .sobre-diferenciais,
+  .sobre-local { padding: 48px 20px; }
+  .sobre-stats { gap: 20px; }
+  .diferenciais-grid { grid-template-columns: 1fr; }
+  .sobre-mapa { height: 300px; }
+}

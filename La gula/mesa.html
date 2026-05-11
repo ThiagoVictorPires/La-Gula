@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#1c1410"/>
+  <title>Cardápio — La Gula Empanada</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="cardapio.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #1c1410; --cream: #f7f2ea; --warm: #f0e8d8;
+      --terra: #b84a25; --terra-dk: #8f3519; --gold: #c89840;
+      --muted: #7a6a58; --border: rgba(90,60,40,0.12);
+      --nav-h: 0px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Barlow', sans-serif; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; padding-bottom: 80px; }
+    img  { display: block; max-width: 100%; }
+    a    { text-decoration: none; }
+
+    /* ── HEADER ── */
+    .mesa-header {
+      background: var(--ink);
+      padding: 24px 20px 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      text-align: center;
+    }
+    .mesa-logo { width: 64px; height: 64px; object-fit: contain; margin-bottom: 4px; }
+    .mesa-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem; font-weight: 700; color: var(--cream);
+    }
+    .mesa-brand em { font-style: italic; color: var(--gold); }
+    .mesa-sub {
+      font-size: .6rem; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(247,242,234,.35); font-weight: 600;
+    }
+
+    /* ── BUSCA INLINE ── */
+    .busca-wrap {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px; border-bottom: 1px solid var(--border);
+      background: var(--warm);
+    }
+    .busca-icon { color: var(--muted); flex-shrink: 0; }
+    .busca-input {
+      flex: 1; border: none; background: transparent;
+      font-family: 'Barlow', sans-serif; font-size: .88rem; color: var(--ink); outline: none;
+    }
+    .busca-input::placeholder { color: var(--muted); }
+    .busca-clear {
+      display: flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px; border-radius: 50%;
+      border: none; background: rgba(90,60,40,.15);
+      color: var(--muted); font-size: .7rem; cursor: pointer; flex-shrink: 0;
+    }
+
+    /* ── RODAPÉ FIXO ── */
+    .mesa-footer {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      display: grid; grid-template-columns: 1fr 1fr;
+      background: var(--ink); z-index: 200; gap: 1px;
+    }
+    .mesa-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 16px 10px;
+      font-family: 'Barlow', sans-serif; font-size: .7rem;
+      font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      color: #fff; cursor: pointer;
+      transition: opacity .2s;
+    }
+    .mesa-btn:hover { opacity: .85; }
+    .mesa-btn-wa   { background: #1a7a3c; }
+    .mesa-btn-if   { background: #ea1d2c; }
+
+    /* reutiliza cat-section, restaurant-grid, rc-* do cardapio.css */
+    .cardapio-main { padding: 24px 16px 16px; max-width: 900px; margin: 0 auto; }
+    .menu-loading  { display: flex; gap: 10px; justify-content: center; padding: 48px; }
+    .loading-dot   { width: 8px; height: 8px; border-radius: 50%; background: var(--terra); animation: bounce .8s infinite alternate; }
+    .loading-dot:nth-child(2) { animation-delay: .2s; }
+    .loading-dot:nth-child(3) { animation-delay: .4s; }
+    @keyframes bounce { to { transform: translateY(-10px); opacity: .4; } }
+    .menu-error { text-align: center; padding: 48px 24px; color: var(--muted); font-size: .88rem; }
+    .menu-error strong { display: block; font-size: 1rem; color: var(--ink); margin-bottom: 6px; }
+
+    /* ── CARDS: sem truncamento ── */
+    .restaurant-card {
+      overflow: visible;
+      align-items: flex-start;
+      height: auto;
+    }
+    .rc-photo {
+      border-radius: 10px 0 0 10px;
+      overflow: hidden;
+      align-self: stretch;
+      flex-shrink: 0;
+    }
+    .rc-body {
+      justify-content: flex-start;
+      overflow: visible;
+      gap: 6px;
+    }
+    .rc-top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+    .rc-name {
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: unset !important;
+      word-break: break-word;
+      line-height: 1.3;
+    }
+    .rc-desc {
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: unset !important;
+      display: block !important;
+      -webkit-line-clamp: unset !important;
+      -webkit-box-orient: unset !important;
+    }
+    .rc-price { white-space: nowrap; }
+    @media (max-width: 480px) {
+      .rc-photo { width: 88px; }
+      .rc-body  { padding: 12px 12px 12px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="mesa-header">
+    <img src="img/logo la gula sem fundo.png" alt="La Gula" class="mesa-logo"/>
+    <div class="mesa-brand"><em>La</em> Gula</div>
+    <div class="mesa-sub">Cardápio Digital</div>
+  </header>
+
+  <!-- BUSCA + TABS STICKY -->
+  <div class="cat-tabs-wrap" id="cat-tabs-wrap">
+    <div class="busca-wrap">
+      <svg class="busca-icon" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="16" height="16"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="busca-cardapio" class="busca-input" placeholder="Buscar no cardápio…" oninput="filtrarBusca(this.value)"/>
+      <button class="busca-clear" id="busca-clear" onclick="limparBusca()" style="display:none">✕</button>
+    </div>
+    <div class="cat-tabs" id="cat-tabs">
+      <button class="cat-tab on" data-cat="all">Todos</button>
+    </div>
+  </div>
+
+  <!-- CARDÁPIO -->
+  <main class="cardapio-main" id="cardapio-main">
+    <div class="menu-loading" id="loading-msg">
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+    </div>
+  </main>
+
+  <!-- RODAPÉ FIXO -->
+  <div class="mesa-footer">
+    <a href="https://wa.me/5519989962889" target="_blank" class="mesa-btn mesa-btn-wa">
+      <svg fill="#fff" height="16" viewBox="0 0 24 24" width="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.132.558 4.13 1.532 5.866L.057 23.428a.75.75 0 00.921.921l5.57-1.476A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.7-.502-5.264-1.38l-.376-.217-3.302.875.876-3.296-.222-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      WhatsApp
+    </a>
+    <a href="https://www.ifood.com.br/delivery/campinas-sp/la-gula-empanadas-centro/7aa0d3a9-ab33-4ba9-89a9-9ec043c8c229" target="_blank" class="mesa-btn mesa-btn-if">
+      <svg fill="#fff" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+      iFood
+    </a>
+  </div>
+
+  <!-- MODAL DO ITEM -->
+  <div id="item-overlay" style="display:none;position:fixed;inset:0;background:rgba(28,20,16,.6);z-index:500;align-items:flex-end;justify-content:center;padding:0" onclick="if(event.target===this)fecharModal()">
+    <div id="item-modal" style="background:var(--cream);border-radius:20px 20px 0 0;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;padding-bottom:24px">
+      <div id="item-modal-foto" style="width:100%;aspect-ratio:16/9;background:var(--warm);border-radius:20px 20px 0 0;overflow:hidden;display:none">
+        <img id="item-modal-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block"/>
+      </div>
+      <div style="padding:20px 20px 0">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+          <div id="item-modal-nome" style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--ink);line-height:1.2;flex:1"></div>
+          <div id="item-modal-preco" style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--terra);white-space:nowrap;flex-shrink:0"></div>
+        </div>
+        <div id="item-modal-desc" style="font-size:.84rem;color:var(--muted);line-height:1.7;margin-bottom:8px"></div>
+        <div id="item-modal-nota" style="font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:20px"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <a id="item-modal-wa" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;background:#1a7a3c;color:#fff;border-radius:10px;font-family:'Barlow',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-decoration:none">
+            <svg fill="#fff" height="16" viewBox="0 0 24 24" width="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.132.558 4.13 1.532 5.866L.057 23.428a.75.75 0 00.921.921l5.57-1.476A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.7-.502-5.264-1.38l-.376-.217-3.302.875.876-3.296-.222-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            WhatsApp
+          </a>
+          <a href="https://www.ifood.com.br/delivery/campinas-sp/la-gula-empanadas-centro/7aa0d3a9-ab33-4ba9-89a9-9ec043c8c229" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;background:#ea1d2c;color:#fff;border-radius:10px;font-family:'Barlow',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-decoration:none">
+            iFood
+          </a>
+        </div>
+        <button onclick="fecharModal()" style="width:100%;margin-top:10px;padding:12px;background:transparent;border:1px solid var(--border);border-radius:10px;font-family:'Barlow',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function abrirItemModal(nome, preco, desc, nota, foto) {
+      document.getElementById('item-modal-nome').textContent  = nome;
+      document.getElementById('item-modal-preco').textContent = preco;
+      document.getElementById('item-modal-desc').textContent  = desc;
+      document.getElementById('item-modal-nota').textContent  = nota;
+      const fotoWrap = document.getElementById('item-modal-foto');
+      if (foto) {
+        document.getElementById('item-modal-img').src = foto;
+        fotoWrap.style.display = 'block';
+      } else {
+        fotoWrap.style.display = 'none';
+      }
+      const wa = document.getElementById('item-modal-wa');
+      wa.href = `https://wa.me/5519989962889?text=${encodeURIComponent('Olá! Quero pedir: ' + nome)}`;
+      const overlay = document.getElementById('item-overlay');
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+    function fecharModal() {
+      document.getElementById('item-overlay').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    window.abrirItemModal = abrirItemModal;
+  </script>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

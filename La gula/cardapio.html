@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Cardápio La Gula Empanada — Empanadas argentinas artesanais em Campinas. Todos os sabores, preços e novidades."/>
+  <title>Cardápio — La Gula Empanada</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="cardapio.css"/>
+</head>
+<body class="page-cardapio">
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a class="nav-logo-link" href="index.html">
+      <img src="img/logo la gula sem fundo.png" alt="La Gula Empanada" class="nav-logo-img"/>
+      <span class="nav-brand"><i>La</i> Gula</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="cardapio.html" class="nav-active">Cardápio</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="index.html#onde">Endereço</a></li>
+      <li>
+        <a class="nav-wa" href="https://wa.me/5519989962889" target="_blank">
+          <svg fill="#fff" height="15" viewBox="0 0 24 24" width="15"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.132.558 4.13 1.532 5.866L.057 23.428a.75.75 0 00.921.921l5.57-1.476A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.7-.502-5.264-1.38l-.376-.217-3.302.875.876-3.296-.222-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          Pedir agora
+        </a>
+      </li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO CARDÁPIO -->
+  <div class="cardapio-hero">
+    <div class="cardapio-hero-inner">
+      <div class="ew" style="color:var(--gold)">La Gula Empanada</div>
+      <h1>Nosso <em>cardápio</em></h1>
+      <p>Massa artesanal, recheios generosos. Cada empanada tem aproximadamente 160g e é dobrada à mão no dia.</p>
+    </div>
+  </div>
+
+  <!-- BUSCA + TABS STICKY -->
+  <div class="cat-tabs-wrap" id="cat-tabs-wrap">
+    <div class="busca-wrap">
+      <svg class="busca-icon" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="16" height="16"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="busca-cardapio" class="busca-input" placeholder="Buscar no cardápio…" oninput="filtrarBusca(this.value)"/>
+      <button class="busca-clear" id="busca-clear" onclick="limparBusca()" style="display:none">✕</button>
+    </div>
+    <div class="cat-tabs" id="cat-tabs">
+      <button class="cat-tab on" data-cat="all">Todos</button>
+    </div>
+  </div>
+
+  <!-- GRID PRINCIPAL -->
+  <main class="cardapio-main" id="cardapio-main">
+    <div class="menu-loading" id="loading-msg">
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+    </div>
+  </main>
+
+  <!-- CTA PEDIDO FIXO NO MOBILE -->
+  <div class="pedido-float">
+    <a href="https://wa.me/5519989962889" target="_blank" class="btn-pedido-float">
+      <svg fill="#fff" height="20" viewBox="0 0 24 24" width="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.132.558 4.13 1.532 5.866L.057 23.428a.75.75 0 00.921.921l5.57-1.476A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.7-.502-5.264-1.38l-.376-.217-3.302.875.876-3.296-.222-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Fazer pedido pelo WhatsApp
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a class="footer-brand" href="index.html"><i>La</i> Gula Empanada</a>
+    <small>© 2025 La Gula · Campinas, SP</small>
+    <a class="fi" href="https://www.instagram.com/lagulaempanadas/" target="_blank">@lagulaempanadas</a>
+  </footer>
+
+  <script src="nav.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>

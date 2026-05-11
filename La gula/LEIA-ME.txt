@@ -1,0 +1,114 @@
+╔══════════════════════════════════════════════════════════════╗
+║         LA GULA — GUIA PARA ATUALIZAR O CARDÁPIO            ║
+╚══════════════════════════════════════════════════════════════╝
+
+O cardápio do site é controlado por uma planilha do Google Sheets.
+Para mudar preço, nome ou adicionar um prato, basta editar a planilha
+— até pelo celular. O site atualiza automaticamente.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASSO 1 — CRIAR A PLANILHA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Acesse sheets.google.com e crie uma planilha nova.
+2. Na primeira linha (cabeçalho), escreva exatamente assim:
+
+   A1: Categoria
+   B1: Subcategoria
+   C1: Nome
+   D1: Descricao
+   E1: Preco
+   F1: Nota
+   G1: Ativo
+
+3. Preencha os itens do cardápio a partir da linha 2.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXEMPLO DE PREENCHIMENTO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Categoria    | Subcategoria        | Nome              | Descricao                          | Preco | Nota                          | Ativo
+-------------|---------------------|-------------------|------------------------------------|-------|-------------------------------|------
+Tradicionais | Tradicionais        | Carne Suave       | Carne, cebola, pimentão e azeitonas| 17,50 | R$ 17,50 cada · aprox. 185 g  | sim
+Tradicionais | Tradicionais        | Humita            | Milho verde, cebola e molho branco | 17,50 |                               | sim
+Premium      | Premium             | Frango c/ Catupiry| Frango, catupiry, alho e molho     | 19,50 | R$ 19,50 cada · aprox. 185 g  | sim
+Integral     | Integral            | Berinjela         | Berinjela, tomate seco, pimentão   | 22,90 |                               | sim
+Doces        | Doces               | Alfajor Artesanal | Chocolate com doce de leite        | 11,50 |                               | sim
+Bebidas      | Cervejas            | Heineken Long Neck|                                    | 12,50 |                               | sim
+Bebidas      | Cervejas            | Heineken 600 ml   |                                    | 19,90 |                               | sim
+
+DICAS:
+• Categoria → cria o filtro de abas (Tradicionais, Premium, etc.)
+• Subcategoria → cria seção dentro da categoria (ex: Cervejas, Vinhos)
+• Nota → aparece ao lado do título da seção (ex: "R$ 17,50 cada")
+• Ativo → escreva "sim" para exibir ou "não" para ocultar sem apagar
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASSO 2 — PUBLICAR A PLANILHA NA WEB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Dentro da planilha, clique em  Arquivo → Compartilhar
+   → Publicar na web
+2. Em "Selecionar", escolha a aba do cardápio (ex: Página1)
+3. Em formato, escolha "Página da Web"
+4. Clique em "Publicar" e confirme
+5. Copie a URL que aparecer — ela tem este formato:
+   https://docs.google.com/spreadsheets/d/XXXXXXXX/pubhtml
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASSO 3 — TRANSFORMAR A URL PARA O FORMATO CORRETO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A URL que o site usa tem um formato diferente da que você copiou.
+Pegue o ID da sua planilha (a parte XXXXXXXX) e monte assim:
+
+
+
+   https://docs.google.com/spreadsheets/d1Yw7hW3bMqCRuNDxzHtQFWAZVU-Wqb5v0VZzaoa8KxPA/gviz/tq?tqx=out:json&sheet=Página1
+
+Exemplo real:
+   https://docs.google.com/spreadsheets/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ/gviz/tq?tqx=out:json&sheet=Página1
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASSO 4 — COLAR A URL NO SITE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Abra o arquivo index.html em qualquer editor de texto
+   (Bloco de Notas funciona)
+2. Procure a linha:
+       const SHEETS_URL = 'SUA_URL_AQUI';
+3. Substitua SUA_URL_AQUI pela URL montada no Passo 3
+4. Salve o arquivo e envie para a Hostinger via FTP
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DIA A DIA — COMO ATUALIZAR O CARDÁPIO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✔  Mudar preço      → edite a coluna E na planilha
+✔  Renomear prato   → edite a coluna C
+✔  Ocultar item     → coloque "não" na coluna G
+✔  Adicionar prato  → adicione uma nova linha
+✔  Remover prato    → apague a linha ou coloque "não" em Ativo
+
+Não é necessário mexer no site. A planilha é o cardápio.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DÚVIDAS FREQUENTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+P: Editei a planilha mas o site não mudou.
+R: O Google Sheets pode demorar alguns minutos para atualizar.
+   Espere 2-3 minutos e atualize a página.
+
+P: O cardápio não aparece no site.
+R: Verifique se a planilha foi publicada na web (Passo 2) e se
+   a URL está exatamente igual à do Passo 3 no arquivo index.html.
+
+P: Posso usar no celular?
+R: Sim. Baixe o aplicativo Google Sheets e edite normalmente.
